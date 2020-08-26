@@ -1,13 +1,15 @@
-import React, {  Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addComment } from '../store/actions/posts'
 import {
     View,
     Text,
     StyleSheet,
-    TouchableWithoutFeedback as TWF ,
-    Alert,
-    TextInput
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+    TextInput,
+    TouchableWithoutFeedback as TWF,
+    Alert
+} from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 class AddComment extends Component {
     state = {
@@ -16,12 +18,19 @@ class AddComment extends Component {
     }
 
     handleAddComment = () => {
-        Alert.alert('Adicionado!', this.state.comment)
+        this.props.onAddComment({
+            postId: this.props.postId,
+            comment: {
+                nickname: this.props.name,
+                comment: this.state.comment
+            }
+        })
+
+        this.setState({ comment: '', editMode: false })
     }
 
-
     render() {
-        let commentArea = null 
+        let commentArea = null
         if (this.state.editMode) {
             commentArea = (
                 <View style={styles.container}>
@@ -29,8 +38,7 @@ class AddComment extends Component {
                         style={styles.input} autoFocus={true}
                         value={this.state.comment}
                         onChangeText={comment => this.setState({ comment })}
-                        onSubmitEditing={this.handleAddComment}
-                    />
+                        onSubmitEditing={this.handleAddComment} />
                     <TWF onPress={() => this.setState({ editMode: false })}>
                         <Icon name='times' size={15} color='#555' />
                     </TWF>
@@ -57,7 +65,7 @@ class AddComment extends Component {
     }
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
@@ -74,4 +82,18 @@ const styles= StyleSheet.create({
     }
 })
 
-export default AddComment;
+const mapStateToProps = ({ user }) => {
+    return {
+        name: user.name
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddComment: payload => dispatch(addComment(payload))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
+
+// export default AddComment

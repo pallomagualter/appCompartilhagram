@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import {
+    View,
+    Text,
+    StyleSheet
+} from 'react-native'
 
 class Comments extends Component {
     render() {
@@ -7,7 +11,7 @@ class Comments extends Component {
         if (this.props.comments) {
             view = this.props.comments.map((item, index) => {
                 return (
-                    <View style={styles.commentsContainer} key={index}>
+                    <View style={styles.commentContainer} key={index}>
                         <Text style={styles.nickname}>{item.nickname}: </Text>
                         <Text style={styles.comment}>{item.comment}</Text>
                     </View>
@@ -28,7 +32,7 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 10
     },
-    commentsContainer: {
+    commentContainer: {
         flexDirection: 'row',
         marginTop: 5
     },
@@ -40,6 +44,6 @@ const styles = StyleSheet.create({
     comment: {
         color: '#555'
     }
-})    
+})
 
 export default Comments

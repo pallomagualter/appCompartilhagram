@@ -4,10 +4,9 @@ import { Gravatar } from 'react-native-gravatar'
 
 export default props => {
     return (
-        <View style={styles.container} >
+        <View style={styles.container}>
             <Gravatar options={{ email: props.email, secure: true }}
-                style={styles.avatar} 
-            />
+                style={styles.avatar} />
             <Text style={styles.nickname}>{props.nickname}</Text>
         </View>
     )
@@ -16,7 +15,7 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     avatar: {
         width: 30,
